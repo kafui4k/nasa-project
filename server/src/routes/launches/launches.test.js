@@ -1,16 +1,16 @@
 const request = require("supertest");
 const app = require("../../app");
 
-describe("Test GET /launches", () => {
+describe("Test GET /v1/launches", () => {
   test("should respond with 200 success", async () => {
     const response = await request(app)
-      .get("/launches")
+      .get("/v1/launches")
       .expect(200)
       .expect("Content-Type", /json/);
   });
 });
 
-describe("Test POST /launches", () => {
+describe("Test POST /v1/launches", () => {
   const completeLaunchData = {
     mission: "USS Enterprise",
     rockect: "Falcon Heavy",
@@ -33,7 +33,7 @@ describe("Test POST /launches", () => {
 
   test("should respond with 201 created", async () => {
     const response = await request(app)
-      .post("/launches")
+      .post("/v1/launches")
       .send(completeLaunchData)
       .expect("Content-Type", /json/)
       .expect(201);
@@ -47,7 +47,7 @@ describe("Test POST /launches", () => {
 
   test("should catch each missing required properties", async () => {
     const response = await request(app)
-      .post("/launches")
+      .post("/v1/launches")
       .send(launchDataWithoutDate)
       .expect("Content-Type", /json/)
       .expect(400);
@@ -60,7 +60,7 @@ describe("Test POST /launches", () => {
 
   test("should catch invalid dates", async () => {
     const response = await request(app)
-      .post("/launches")
+      .post("/v1/launches")
       .send(launchDataWitInvalidtDate)
       .expect("Content-Type", /json/)
       .expect(400);
